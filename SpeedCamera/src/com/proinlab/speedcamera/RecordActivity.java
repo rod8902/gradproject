@@ -30,10 +30,6 @@ public class RecordActivity extends Activity {
 
 	private ImageView captureButton;
 
-	// add timer instance 
-	final Timer mtimer;
-	final TimerTask mtask;
-
 	//start onCreate
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,13 +44,13 @@ public class RecordActivity extends Activity {
 
 		captureButton = (ImageView) findViewById(R.id.record);
 
-		mtask = new TimerTask(){
+		final TimerTask mTask = new TimerTask(){
 			public void run(){
-				MediaManager.releaseMediaRecorder(mMediaRecorder,mCamera);
+				MediaManager.releaseMediaRecorder(mMediaRecorder, mCamera);
 				if(prepareVideoRecorder()) mMediaRecorder.start(); 
 			}
-		}
-
+		};
+	
 
 		captureButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -75,7 +71,7 @@ public class RecordActivity extends Activity {
 						captureButton.setImageResource(R.drawable.av_stop);
 
 						// add Timer 
-						mtimer = new Timer();
+						Timer mtimer = new Timer();
 						mtimer.schedule(mTask, 0, 3000);
 
 						isRecording = true;
